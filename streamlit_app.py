@@ -52,3 +52,21 @@ try:
         LIMIT 10;
     """)
     rows = cur.fetchall()
+
+    cur.close()
+    conn.close()
+
+    if rows:
+        st.table([{
+            "Volunteer": r[0],
+            "Program": r[1],
+            "Location": r[2],
+            "Role": r[3],
+            "Start Date": str(r[4]),
+            "Hours Served": r[5]
+        } for r in rows])
+    else:
+        st.info("No assignments yet. Add volunteers and programs to get started!")
+
+except Exception as e:
+    st.error(f"Database connection error: {e}")
